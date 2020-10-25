@@ -23,8 +23,8 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <StartAction>Program</StartAction>
-    <StartProgram>%24%28MSBuildProjectDirectory%29\..\..\..\..\RimWorldWin64.exe</StartProgram>
-    <StartArguments></StartArguments>
+    <StartProgram>$(MSBuildProjectDirectory)\..\..\..\..\RimWorldWin64.exe</StartProgram>
+    <StartArguments>"-savedatafolder=$(MSBuildProjectDirectory)\TestSaves"</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,8 +35,8 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <StartAction>Program</StartAction>
-    <StartProgram>%24%28MSBuildProjectDirectory%29\..\..\..\..\RimWorldWin64.exe</StartProgram>
-    <StartArguments></StartArguments>
+    <StartProgram>$(MSBuildProjectDirectory)\..\..\..\..\RimWorldWin64.exe</StartProgram>
+    <StartArguments>"-savedatafolder=$(MSBuildProjectDirectory)\TestSaves"</StartArguments>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Building_FermentingMeadBarrel.cs" />
