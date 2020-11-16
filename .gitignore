@@ -234,3 +234,8 @@ $RECYCLE.BIN/
 # Rimworld specific
 _PublisherPlus.xml
 lastrun.log
+
+# specific to this mod
+/Source/Dwarves/TestSaves/Config/LastPlayedVersion.txt
+/Source/Dwarves/TestSaves/Config/Knowledge.xml
+/Source/Dwarves/TestSaves/Config/KeyPrefs.xml
