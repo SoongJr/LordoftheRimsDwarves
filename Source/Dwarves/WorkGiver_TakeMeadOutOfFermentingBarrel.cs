@@ -6,13 +6,14 @@ namespace Dwarves
 {
     public class WorkGiver_TakeMeadOutOfFermentingBarrel : WorkGiver_Scanner
     {
-        public override ThingRequest PotentialWorkThingRequest => ThingRequest.ForDef(ThingDef.Named("LotRD_FermentingBarrel"));
+        public override ThingRequest PotentialWorkThingRequest =>
+            ThingRequest.ForDef(ThingDef.Named("LotRD_FermentingBarrel"));
+
         public override PathEndMode PathEndMode => PathEndMode.Touch;
 
         public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
-            if (!(t is Building_FermentingMeadBarrel building_FermentingMeadBarrel) ||
-                !building_FermentingMeadBarrel.Fermented)
+            if (!(t is Building_FermentingMeadBarrel {Fermented: true}))
             {
                 return false;
             }

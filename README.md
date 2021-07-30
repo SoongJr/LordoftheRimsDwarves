@@ -11,6 +11,7 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=1400238872
 - Added support for Combat Extended
 - Fixed starting goodwill with Empire
 - Added Royalty-titles support, via SoongJr
+- Giant Boars should spawn in more biomes, via leugimimi
 
 ![Image](https://i.imgur.com/7Gzt3Rg.png)
 
@@ -41,7 +42,7 @@ Requires:
  JecsTools, DoorsExpanded, and Humanoid Alien Races
 
 
-(Apologies that this workshop page isn't very nice. It's 3AM, so I'll fix this up to look nicer tomorrow! =D)
+(Apologies that this workshop page isn&apos;t very nice. It&apos;s 3AM, so I&apos;ll fix this up to look nicer tomorrow! =D)
 
 Join the Lord of the Rims channel to discuss the mod.
 https://discord.gg/jcMf4am
@@ -57,6 +58,7 @@ https://discord.gg/jcMf4am
 -  For best support, please use the Discord-channel for error-reporting.
 -  Do not report errors by making a discussion-thread, I get no notification of that.
 -  If you have the solution for a problem, please post it to the GitHub repository.
+
 
 
 

@@ -9,9 +9,9 @@ namespace Dwarves
     public class JoyGiver_Puzzlebox : JoyGiver_Ingest
     {
         /// <summary>
-        /// Similar to how a pawn can be a social drinker or solitary relaxer in their room, hobbits can try and solve a puzzle box.
+        ///     Similar to how a pawn can be a social drinker or solitary relaxer in their room, hobbits can try and solve a puzzle
+        ///     box.
         /// </summary>
-
         public override float GetChance(Pawn pawn)
         {
             //hobbits have twice the chance of opening the puzzle box
@@ -19,10 +19,8 @@ namespace Dwarves
             {
                 return def.baseChance;
             }
-            else
-            {
-                return def.baseChance * 0.5f;
-            }
+
+            return def.baseChance * 0.5f;
         }
 
         //folks can puzzle during a party and when they're by themselves: hence the dual-job
@@ -31,18 +29,20 @@ namespace Dwarves
             return TryGiveJobInternal(pawn, null);
         }
 
-        public override Job TryGiveJobInGatheringArea(Pawn pawn, IntVec3 gatheringSpot)
+        public override Job TryGiveJobInGatheringArea(Pawn pawn, IntVec3 gatheringSpot, float maxRadius = -1)
         {
-            return TryGiveJobInternal(pawn, (Thing x) => !x.Spawned || GatheringsUtility.InGatheringArea(x.Position, gatheringSpot, pawn.Map));
+            return TryGiveJobInternal(pawn,
+                x => !x.Spawned || GatheringsUtility.InGatheringArea(x.Position, gatheringSpot, pawn.Map));
         }
 
         private Job TryGiveJobInternal(Pawn pawn, Predicate<Thing> extraValidator)
         {
-            Thing thing = BestIngestItem(pawn, extraValidator);
+            var thing = BestIngestItem(pawn, extraValidator);
             if (thing != null)
             {
                 return CreateIngestJob(thing, pawn);
             }
+
             return null;
         }
 
@@ -51,14 +51,16 @@ namespace Dwarves
             //Find the puzzle box.
             bool predicate(Thing t)
             {
-                return (t.def == DefDatabase<ThingDef>.GetNamed("LotRD_DwarfPuzzleBox")) && pawn.CanReserve(t) && (extraValidator == null || extraValidator(t));
+                return t.def == DefDatabase<ThingDef>.GetNamed("LotRD_DwarfPuzzleBox") && pawn.CanReserve(t) &&
+                       (extraValidator == null || extraValidator(t));
             }
 
             var searchSet = new List<Thing>();
             GetSearchSet(pawn, searchSet);
-            var traverseParams = TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn, false);
+            var traverseParams = TraverseParms.For(pawn);
 
-            return GenClosest.ClosestThing_Global_Reachable(pawn.Position, pawn.Map, searchSet, PathEndMode.OnCell, traverseParams, 9999f, predicate, null);
+            return GenClosest.ClosestThing_Global_Reachable(pawn.Position, pawn.Map, searchSet, PathEndMode.OnCell,
+                traverseParams, 9999f, predicate);
         }
 
         protected override Job CreateIngestJob(Thing thing, Pawn pawn)

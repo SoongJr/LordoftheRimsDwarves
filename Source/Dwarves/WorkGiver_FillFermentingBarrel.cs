@@ -7,7 +7,13 @@ namespace Dwarves
 {
     public class WorkGiver_FillFermentingBarrel : WorkGiver_Scanner
     {
-        public override ThingRequest PotentialWorkThingRequest => ThingRequest.ForDef(ThingDef.Named("LotRD_FermentingBarrel"));
+        private static string TemperatureTrans;
+
+        private static string NoWortTrans;
+
+        public override ThingRequest PotentialWorkThingRequest =>
+            ThingRequest.ForDef(ThingDef.Named("LotRD_FermentingBarrel"));
+
         public override PathEndMode PathEndMode => PathEndMode.Touch;
 
         public static void Reset()
@@ -33,6 +39,7 @@ namespace Dwarves
                 JobFailReason.Is(TemperatureTrans);
                 return false;
             }
+
             if (t.IsForbidden(pawn))
             {
                 return false;
@@ -49,7 +56,7 @@ namespace Dwarves
                 return false;
             }
 
-            if (FindWort(pawn, Building_FermentingMeadBarrel) != null)
+            if (FindWort(pawn) != null)
             {
                 return !t.IsBurning();
             }
@@ -60,30 +67,24 @@ namespace Dwarves
 
         public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
-            var barrel = (Building_FermentingMeadBarrel) t;
-            var t2 = FindWort(pawn, barrel);
+            var t2 = FindWort(pawn);
             return new Job(DefDatabase<JobDef>.GetNamed("LotRD_FillFermentingBarrel"), t, t2);
         }
 
-        private Thing FindWort(Pawn pawn, Building_FermentingMeadBarrel barrel)
+        private Thing FindWort(Pawn pawn)
         {
             bool Predicate(Thing x)
             {
-                return !x.IsForbidden(pawn) && pawn.CanReserve(x, 1, -1, null, false);
+                return !x.IsForbidden(pawn) && pawn.CanReserve(x);
             }
 
             var position = pawn.Position;
             var map = pawn.Map;
             var thingReq = ThingRequest.ForDef(ThingDef.Named("LotRD_MeadWort"));
             const PathEndMode peMode = PathEndMode.ClosestTouch;
-            var traverseParams = TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn, false);
+            var traverseParams = TraverseParms.For(pawn);
             Predicate<Thing> validator = Predicate;
-            return GenClosest.ClosestThingReachable(position, map, thingReq, peMode, traverseParams, 9999f, validator,
-                null, 0, -1, false, RegionType.Set_Passable, false);
+            return GenClosest.ClosestThingReachable(position, map, thingReq, peMode, traverseParams, 9999f, validator);
         }
-
-        private static string TemperatureTrans;
-
-        private static string NoWortTrans;
     }
 }

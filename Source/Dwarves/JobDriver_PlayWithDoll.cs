@@ -17,7 +17,7 @@ namespace Dwarves
 
         public override bool TryMakePreToilReservations(bool yeaa)
         {
-            return pawn.Reserve(PuzzleBox, job, 1, -1, null);
+            return pawn.Reserve(PuzzleBox, job);
         }
 
         protected override IEnumerable<Toil> MakeNewToils()
@@ -26,8 +26,7 @@ namespace Dwarves
             yield return Toils_Ingest.PickupIngestible(ToyInd, pawn);
             yield return CarryToyToSpot(pawn, ToyInd);
             yield return Toils_Ingest.FindAdjacentEatSurface(joySpot, ToyInd);
-            Toil playWithToy;
-            playWithToy = new Toil
+            var playWithToy = new Toil
             {
                 tickAction = WaitTickAction()
             };
@@ -42,13 +41,13 @@ namespace Dwarves
             yield return playWithToy;
         }
 
-        protected void TalkToDoll()
+        private void TalkToDoll()
         {
-            var symbol = InteractionDefOf.Chitchat.Symbol;
-            if (((Rand.Value > 0.5f) && pawn?.needs?.joy?.CurCategory <= JoyCategory.Low) ||
+            var symbol = InteractionDefOf.Chitchat.GetSymbol();
+            if (Rand.Value > 0.5f && pawn?.needs?.joy?.CurCategory <= JoyCategory.Low ||
                 (pawn?.story?.traits.HasTrait(TraitDefOf.Abrasive) ?? false))
             {
-                symbol = InteractionDefOf.Insult.Symbol;
+                symbol = InteractionDefOf.Insult.GetSymbol();
             }
 
             MoteMaker.MakeInteractionBubble(pawn, null, ThingDefOf.Mote_Speech, symbol);
@@ -73,74 +72,83 @@ namespace Dwarves
 //            }
         }
 
-        protected Action WaitTickAction()
+        private Action WaitTickAction()
         {
             return delegate
             {
                 pawn.rotationTracker.FaceCell(TargetB.Cell);
                 pawn.GainComfortFromCellIfPossible();
-                var extraJoyGainFactor = TargetThingA.GetStatValue(StatDefOf.JoyGainFactor, true);
+                var extraJoyGainFactor = TargetThingA.GetStatValue(StatDefOf.JoyGainFactor);
                 JoyUtility.JoyTickCheckEnd(pawn, JoyTickFullJoyAction.EndJob, extraJoyGainFactor);
             };
         }
 
         //slightly modified version of Toils_Ingest.CarryIngestibleToChewSpot
-        public static Toil CarryToyToSpot(Pawn pawn, TargetIndex puzzleInd)
+        private static Toil CarryToyToSpot(Pawn pawn, TargetIndex puzzleInd)
         {
             var toil = new Toil();
             toil.initAction = delegate
             {
-                Pawn actor = toil.actor;
-                IntVec3 intVec = IntVec3.Invalid;
-                Thing thing = null;
-                Thing thing2 = actor.CurJob.GetTarget(puzzleInd).Thing;
+                var actor = toil.actor;
+                var intVec = IntVec3.Invalid;
+                var thing2 = actor.CurJob.GetTarget(puzzleInd).Thing;
+
                 bool baseChairValidator(Thing t)
                 {
                     if (t.def.building == null || !t.def.building.isSittable)
                     {
                         return false;
                     }
+
                     if (t.IsForbidden(pawn))
                     {
                         return false;
                     }
-                    if (!actor.CanReserve(t, 1, -1, null, false))
+
+                    if (!actor.CanReserve(t))
                     {
                         return false;
                     }
+
                     if (!t.IsSociallyProper(actor))
                     {
                         return false;
                     }
+
                     if (t.IsBurning())
                     {
                         return false;
                     }
+
                     if (t.HostileTo(pawn))
                     {
                         return false;
                     }
+
                     var result = false;
                     for (var i = 0; i < 4; i++)
                     {
-                        IntVec3 c = t.Position + GenAdj.CardinalDirections[i];
-                        Building edifice = c.GetEdifice(t.Map);
-                        if (edifice != null && edifice.def.surfaceType == SurfaceType.Eat)
+                        var c = t.Position + GenAdj.CardinalDirections[i];
+                        var edifice = c.GetEdifice(t.Map);
+                        if (edifice == null || edifice.def.surfaceType != SurfaceType.Eat)
                         {
-                            result = true;
-                            break;
+                            continue;
                         }
+
+                        result = true;
+                        break;
                     }
+
                     return result;
                 }
 
                 //if you can find a table with chair, great. If not, go to your room.
 
-                thing = GenClosest.ClosestThingReachable(actor.Position, actor.Map,
+                var thing = GenClosest.ClosestThingReachable(actor.Position, actor.Map,
                     ThingRequest.ForGroup(ThingRequestGroup.BuildingArtificial), PathEndMode.OnCell,
                     TraverseParms.For(actor),
                     30f, //"chair search radius"
-                    (Thing t) => baseChairValidator(t) && t.Position.GetDangerFor(pawn, t.Map) == Danger.None);
+                    t => baseChairValidator(t) && t.Position.GetDangerFor(pawn, t.Map) == Danger.None);
 
                 if (thing == null)
                 {
@@ -152,15 +160,18 @@ namespace Dwarves
                             select c).TryRandomElement(out intVec);
                     }
                 }
+
                 if (thing != null)
                 {
                     intVec = thing.Position;
-                    actor.Reserve(thing, actor.CurJob, 1, -1, null);
+                    actor.Reserve(thing, actor.CurJob);
                 }
+
                 if (intVec == IntVec3.Invalid)
                 {
                     intVec = RCellFinder.SpotToChewStandingNear(pawn, thing2);
                 }
+
                 actor.Map.pawnDestinationReservationManager.Reserve(actor, actor.CurJob, intVec);
                 actor.pather.StartPath(intVec, PathEndMode.OnCell);
             };

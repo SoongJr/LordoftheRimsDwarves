@@ -3,9 +3,9 @@ using Verse;
 
 namespace Dwarves
 {
-    class ThingWithComps_Glower : ThingWithComps
+    internal class ThingWithComps_Glower : ThingWithComps
     {
-        public Building_StreetLamp master = null;
+        public Building_StreetLamp master;
 
         public override void Draw()
         {
@@ -18,28 +18,28 @@ namespace Dwarves
             CheckNeedsFlick();
         }
 
-        public void CheckNeedsDestruction()
+        private void CheckNeedsDestruction()
         {
-            if (master != null && Spawned)
+            if (master == null || !Spawned)
             {
-                if (!master.Spawned)
-                {
-                    Destroy(0);
-                    return;
-                }
+                return;
+            }
 
+            if (!master.Spawned)
+            {
+                Destroy();
             }
         }
 
-        public void CheckNeedsFlick()
+        private void CheckNeedsFlick()
         {
             if (master == null)
             {
                 return;
             }
 
-            CompFlickable masterflickable = master.TryGetComp<CompFlickable>();
-            CompFlickable flickable = this.TryGetComp<CompFlickable>();
+            var masterflickable = master.TryGetComp<CompFlickable>();
+            var flickable = this.TryGetComp<CompFlickable>();
 
             if (masterflickable.SwitchIsOn != flickable.SwitchIsOn)
             {
@@ -50,7 +50,7 @@ namespace Dwarves
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_References.Look(ref master, "master", false);
+            Scribe_References.Look(ref master, "master");
         }
     }
 }
