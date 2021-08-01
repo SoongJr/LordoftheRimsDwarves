@@ -8,6 +8,7 @@
     <pawnsPlural>mountain dwarves</pawnsPlural>
     <settlementGenerationWeight>0.2</settlementGenerationWeight>
     <requiredCountAtGameStart>1</requiredCountAtGameStart>
+    <maxConfigurableAtWorldCreation>9999</maxConfigurableAtWorldCreation>
     <canMakeRandomly>true</canMakeRandomly>
     <canSiege>true</canSiege>
     <canStageAttacks>true</canStageAttacks>
@@ -195,6 +196,7 @@
     <pawnsPlural>bandit dwarves</pawnsPlural>
     <settlementGenerationWeight>0.1</settlementGenerationWeight>
     <requiredCountAtGameStart>1</requiredCountAtGameStart>
+    <maxConfigurableAtWorldCreation>9999</maxConfigurableAtWorldCreation>
     <maxCountAtGameStart>2</maxCountAtGameStart>
     <maxPawnCostPerTotalPointsCurve>
       <points>

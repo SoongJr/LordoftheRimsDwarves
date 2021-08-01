@@ -1,5 +1,8 @@
 # Changelog for LordoftheRimsDwarves
 
+1.0.12.0 - Number of factions should now be selectable on game-start
+
+
 1.0.11.0 - Missed the 1.3 Royalty patch-folder
 
 
