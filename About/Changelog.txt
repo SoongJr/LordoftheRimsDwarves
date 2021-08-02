@@ -1,5 +1,8 @@
 # Changelog for LordoftheRimsDwarves
 
+1.0.13.0 - Missed the HillClan for selectable at gamestart
+
+
 1.0.12.0 - Number of factions should now be selectable on game-start
 
 
