@@ -1,5 +1,8 @@
 # Changelog for LordoftheRimsDwarves
 
+1.0.14.0 - Should now work better with GiddyUp
+
+
 1.0.13.0 - Missed the HillClan for selectable at gamestart
 
 

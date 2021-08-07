@@ -111,8 +111,8 @@
       <li Class="JecsTools.PatchOperationModLoaded">
         <modName>Giddy-up! Core</modName>
       </li>
-      <li Class="PatchOperationAdd">
-        <xpath>*/FactionDef[ defName = "LotRD_HillClans"]/pawnGroupMakers/li[0]/options</xpath>
+      <li Class="PatchOperationReplace">
+        <xpath>*/FactionDef[ defName = "LotRD_HillClans"]/pawnGroupMakers/li[0]/options/LotRD_DwarfSoldierHillHogRider</xpath>
         <value>
           <LotRD_DwarfSoldierHillHogRider>123</LotRD_DwarfSoldierHillHogRider>
         </value>
@@ -126,8 +126,8 @@
       <li Class="JecsTools.PatchOperationModLoaded">
         <modName>Giddy-up! Core</modName>
       </li>
-      <li Class="PatchOperationAdd">
-        <xpath>*/FactionDef[ defName = "LotRD_HillClans"]/pawnGroupMakers/li[1]/guards</xpath>
+      <li Class="PatchOperationReplace">
+        <xpath>*/FactionDef[ defName = "LotRD_HillClans"]/pawnGroupMakers/li[1]/guards/LotRD_DwarfSoldierHillHogRider</xpath>
         <value>
           <LotRD_DwarfSoldierHillHogRider>123</LotRD_DwarfSoldierHillHogRider>
         </value>
@@ -141,8 +141,8 @@
       <li Class="JecsTools.PatchOperationModLoaded">
         <modName>Giddy-up! Core</modName>
       </li>
-      <li Class="PatchOperationAdd">
-        <xpath>*/FactionDef[ defName = "LotRD_HillClans"]/pawnGroupMakers/li[2]/options</xpath>
+      <li Class="PatchOperationReplace">
+        <xpath>*/FactionDef[ defName = "LotRD_HillClans"]/pawnGroupMakers/li[2]/options/LotRD_DwarfSoldierHillHogRider</xpath>
         <value>
           <LotRD_DwarfSoldierHillHogRider>123</LotRD_DwarfSoldierHillHogRider>
         </value>
