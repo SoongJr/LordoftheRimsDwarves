@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
   <HugsLib.UpdateFeatureDef Abstract="true" Name="UpdateFeatureBase">
     <modNameReadable>LordoftheRimsDwarves</modNameReadable>
@@ -12,4 +12,9 @@ The information on what items are needed might not show the dwarven items due to
 Thanks SoongJr for most of the work on this update!
 </content>
   </HugsLib.UpdateFeatureDef>
+	<HugsLib.UpdateFeatureDef ParentName="UpdateFeatureBase">
+		<defName>LordoftheRimsDwarves_1_0_15_0</defName>
+		<assemblyVersion>1.0.15.0</assemblyVersion>
+		<content>The original version of this mod has been updated, please use it instead. This version will remain, but unlisted and will not be updated further.</content>
+	</HugsLib.UpdateFeatureDef>
 </Defs>

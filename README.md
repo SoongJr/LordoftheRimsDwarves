@@ -13,7 +13,7 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=1400238872
 - Added Royalty-titles support, via SoongJr
 - Giant Boars should spawn in more biomes, via leugimimi
 
-![Image](https://i.imgur.com/7Gzt3Rg.png)
+![Image](https://i.imgur.com/CN9Rs5X.png)
 
 
 [table]

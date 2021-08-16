@@ -1,5 +1,8 @@
 # Changelog for LordoftheRimsDwarves
 
+1.0.15.0 - Last update, added end-of-life message
+
+
 1.0.14.0 - Should now work better with GiddyUp
 
 
